@@ -1,5 +1,6 @@
 {
+  "type": "module",  // <-- এই লাইনটি যোগ করুন
   "dependencies": {
-    "@google/generative-ai": "^0.1.0" 
+    "@google/generative-ai": "^0.1.0"
   }
 }

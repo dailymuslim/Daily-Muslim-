@@ -1,10 +1,9 @@
 // netlify/functions/askGemini.js
 
-// GoogleGenerativeAI SDK আমদানি করা: require এর বদলে import ব্যবহার করা হলো
-import { GoogleGenerativeAI } from "@google/generative-ai";
+// GoogleGenerativeAI SDK আমদানি করা: CommonJS (require) ব্যবহার করা হলো
+const { GoogleGenerativeAI } = require("@google/generative-ai"); // <-- require ব্যবহার করা হলো
 
 // আপনার অ্যাপের সম্পূর্ণ ও চূড়ান্ত তথ্য ভান্ডার (APP_METADATA)
-// এই তথ্য এআইকে অ্যাপ সম্পর্কে বিস্তারিত জানাবে।
 const APP_METADATA = `এই অ্যাপ্লিকেশনটির আনুষ্ঠানিক নাম 'Daily Muslim', যা অ্যাপের ভেতরে 'ইসলামিক সহায়িকা' (Islamic Shohayika) নামে পরিচিত। এটি একটি ডেডিকেটেড ইসলামিক অ্যাপ।
 **বর্তমান ভার্সন:** v1.0.1।
 **প্রতিষ্ঠাতা:** এই অ্যাপটি তৈরি করেছেন **রাসেল খান (Rasel Khan)**, যিনি **SSC '26 ব্যাচের ছাত্র**।
@@ -76,7 +75,7 @@ exports.handler = async (event) => {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         // Gemini API কল
-        console.log("DEBUG: Attempting to call Gemini API..."); // <-- এই লগটি সমস্যা সমাধানে সাহায্য করবে
+        console.log("DEBUG: Attempting to call Gemini API..."); 
         const result = await model.generateContent(fullPrompt); 
         const responseText = result.text; // উত্তর বের করা
 
@@ -89,7 +88,7 @@ exports.handler = async (event) => {
         
     } catch (error) {
         // যেকোনো API বা পার্সিং ত্রুটি হ্যান্ডেল করা
-        console.error("Gemini API Call Failed! Full Error:", error.toString()); // <-- ত্রুটি দেখার জন্য
+        console.error("Gemini API Call Failed! Full Error:", error.toString()); 
         return {
             statusCode: 500,
             body: JSON.stringify({ error: "এআই সার্ভার কল করতে সমস্যা হয়েছে। অনুগ্রহ করে লগ চেক করুন।" }),

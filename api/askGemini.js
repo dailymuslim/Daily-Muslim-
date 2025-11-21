@@ -38,8 +38,6 @@ ${APP_METADATA}
 
 // Vercel Serverless Function-এর এন্ট্রি পয়েন্ট
 export default async function handler(req, res) {
-    // API Key টি Vercel Environment Variables থেকে নিরাপদে নেওয়া হচ্ছে
-    const apiKey = process.env.GEMINI_API_KEY; 
     
     // ===========================================
     // CORS হেডার যুক্ত করা (নেটওয়ার্ক এরর সমাধানের জন্য)
@@ -59,9 +57,17 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
+    // API Key টি Vercel Environment Variables থেকে নিরাপদে নেওয়া হচ্ছে
+    const apiKey = process.env.GEMINI_API_KEY; 
+    
+    // ===================================
+    // DEBUGGING: ফাংশন শুরু হয়েছে কিনা তা লগ করা
+    // ===================================
+    console.log("DEBUG: Function Started Successfully."); 
+
     // API Key না পেলে ত্রুটি প্রদান করা
     if (!apiKey) {
-        console.error("Configuration Error: GEMINI_API_KEY is not set.");
+        console.error("DEBUG: Configuration Error: GEMINI_API_KEY is not set.");
         return res.status(500).json({ error: 'API Key Missing. Check Vercel Environment Variables.' });
     }
     
@@ -83,7 +89,7 @@ export default async function handler(req, res) {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         // Gemini API কল
-        console.log("DEBUG: Calling Gemini API...");
+        console.log("DEBUG: Attempting Gemini API Call...");
         const result = await model.generateContent(fullPrompt); 
         const responseText = result.text; // উত্তর বের করা
 
@@ -91,8 +97,13 @@ export default async function handler(req, res) {
         res.status(200).json({ response: responseText });
         
     } catch (error) {
+        // ==================================================
         // যেকোনো API বা পার্সিং ত্রুটি হ্যান্ডেল করা
-        console.error("Gemini API Call Failed! Full Error:", error.toString()); 
+        // ==================================================
+        console.error("CRITICAL ERROR: Gemini API Call Failed! Full Error:", error.toString()); 
+        
+        // যদি Key ভুল হয়, তবে Google সাধারণত 4xx বা 5xx এরর দেয়।
+        // Vercel লগসে এরর দেখানোর জন্য এটি নিশ্চিত করা হলো।
         res.status(500).json({ 
             error: "এআই সার্ভার কল করতে সমস্যা হয়েছে। অনুগ্রহ করে Vercel লগ চেক করুন।",
             details: error.message || error.toString() 

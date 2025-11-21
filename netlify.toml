@@ -1,4 +1,8 @@
+# netlify.toml
+
 [build]
+  # এই লাইনটি Netlify-কে বলে যে লাইব্রেরি ইনস্টল করতে হবে এবং তারপর ফাংশন বান্ডল করতে হবে
+  command = "npm install && netlify deploy" 
   functions = "netlify/functions"
   
 [functions]

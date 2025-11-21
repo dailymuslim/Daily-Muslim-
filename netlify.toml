@@ -1,9 +1,6 @@
-# netlify.toml
-
 [build]
-  # এটি Netlify-কে বলে যে আপনার ফাংশন ফাইলগুলি কোথায় আছে।
   functions = "netlify/functions"
-
+  
 [functions]
-  # এই লাইনটি Node.js ডিপেন্ডেন্সি (লাইব্রেরি) বান্ডল করতে বাধ্য করে।
   node_bundler = "esbuild"
+  node_version = "18"  // <-- এই লাইনটি যোগ করুন

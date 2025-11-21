@@ -40,7 +40,10 @@ ${APP_METADATA}
 exports.handler = async (event) => {
     // API Key টি Netlify Environment Variables থেকে নিরাপদে নেওয়া হচ্ছে
     const apiKey = process.env.GEMINI_API_KEY; 
-    const genAI = new GoogleGenerativeAI(apiKey);
+    
+    // *** সংশোধিত লাইন ***
+    const genAI = new GoogleGenerativeAI({ apiKey }); // Key এখন অবজেক্ট প্রোপার্টি হিসেবে পাস হচ্ছে
+    // *******************
 
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: "Method Not Allowed" };
@@ -58,7 +61,7 @@ exports.handler = async (event) => {
         
         // এখানে fullPrompt ব্যবহার করা হয়েছে
         const result = await model.generateContent(fullPrompt.replace("${prompt}", prompt)); 
-        const responseText = result.response.text();
+        const responseText = result.text; // .response.text() থেকে .text() তে পরিবর্তন করা হয়েছে
 
         return {
             statusCode: 200,

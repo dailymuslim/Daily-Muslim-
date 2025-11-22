@@ -1,6 +1,6 @@
 // GoogleGenerativeAI SDK আমদানি: এই সিনট্যাক্সটি Google-এর অফিসিয়াল CJS পদ্ধতি।
 // এটি এখন কাজ করবে, কারণ package.json ঠিক করা হচ্ছে।
-const { GoogleGenerativeAI } = require('@google/genai');
+const GoogleGenerativeAI = require('@google/genai').GoogleGenerativeAI || require('@google/genai').default;
 
 // আপনার অ্যাপের সম্পূর্ণ ও চূড়ান্ত তথ্য ভান্ডার (APP_METADATA)
 const APP_METADATA = `এই অ্যাপ্লিকেশনটির আনুষ্ঠানিক নাম 'Daily Muslim', যা অ্যাপের ভেতরে 'ইসলামিক সহায়িকা' (Islamic Shohayika) নামে পরিচিত। এটি একটি ডেডিকেটেড ইসলামিক অ্যাপ।

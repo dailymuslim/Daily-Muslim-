@@ -1,9 +1,17 @@
 {
-  "dependencies": {
-    // অন্য সব প্যাকেজ...
-    "@google/genai": "^0.1.0" // এই লাইনটি যোগ করুন (অথবা বর্তমানে যে ভার্সন আছে, সেটি)
-  },
+  "name": "daily-muslim-app",
+  "version": "1.0.0",
+  "description": "Backend API for Islamic Shohayika",
+  "main": "api/askGemini.js",
   "scripts": {
-    // স্ক্রিপ্টস...
+    "start": "node api/askGemini.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^0.1.0" 
+    // যদি আপনার API কোডে cors, dotenv ইত্যাদি দরকার হয়, তাহলে এখানে যোগ করবেন
+    // "cors": "^2.8.5"
   }
 }

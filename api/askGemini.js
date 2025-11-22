@@ -1,5 +1,5 @@
 // GoogleGenerativeAI SDK আমদানি: TypeError ঠিক করার জন্য সঠিক CJS সিনট্যাক্স ব্যবহার করা হলো
-const GoogleGenerativeAI = require('@google/genai').default; // .default যোগ করা হলো
+const GoogleGenerativeAI = require('@google/genai').default; // .default যোগ করা হলো // Final Fix
 
 // আপনার অ্যাপের সম্পূর্ণ ও চূড়ান্ত তথ্য ভান্ডার (APP_METADATA)
 const APP_METADATA = `এই অ্যাপ্লিকেশনটির আনুষ্ঠানিক নাম 'Daily Muslim', যা অ্যাপের ভেতরে 'ইসলামিক সহায়িকা' (Islamic Shohayika) নামে পরিচিত। এটি একটি ডেডিকেটেড ইসলামিক অ্যাপ।

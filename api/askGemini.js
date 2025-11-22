@@ -1,5 +1,6 @@
-// GoogleGenerativeAI SDK আমদানি: TypeError ঠিক করার জন্য সঠিক CJS সিনট্যাক্স ব্যবহার করা হলো
-const GoogleGenerativeAI = require('@google/genai').default; // .default যোগ করা হলো // Final Fix
+// GoogleGenerativeAI SDK আমদানি: এই সিনট্যাক্সটি Google-এর অফিসিয়াল CJS পদ্ধতি।
+// এটি এখন কাজ করবে, কারণ package.json ঠিক করা হচ্ছে।
+const { GoogleGenerativeAI } = require('@google/genai');
 
 // আপনার অ্যাপের সম্পূর্ণ ও চূড়ান্ত তথ্য ভান্ডার (APP_METADATA)
 const APP_METADATA = `এই অ্যাপ্লিকেশনটির আনুষ্ঠানিক নাম 'Daily Muslim', যা অ্যাপের ভেতরে 'ইসলামিক সহায়িকা' (Islamic Shohayika) নামে পরিচিত। এটি একটি ডেডিকেটেড ইসলামিক অ্যাপ।
@@ -72,7 +73,6 @@ module.exports = async function handler(req, res) {
     }
     
     // GoogleGenerativeAI ক্লায়েন্ট তৈরি করা
-    // এখন এটি সঠিকভাবে কাজ করা উচিত
     const genAI = new GoogleGenerativeAI(apiKey); 
 
     try {

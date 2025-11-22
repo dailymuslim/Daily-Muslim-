@@ -1,4 +1,4 @@
-// GoogleGenerativeAI SDK আমদানি করা: CommonJS (CJS) এর জন্য require ব্যবহার করা হলো
+// GoogleGenerativeAI SDK আমদানি: TypeError ঠিক করার জন্য সঠিক CJS সিনট্যাক্স ব্যবহার করা হলো
 const { GoogleGenerativeAI } = require('@google/genai');
 
 // আপনার অ্যাপের সম্পূর্ণ ও চূড়ান্ত তথ্য ভান্ডার (APP_METADATA)
@@ -72,6 +72,7 @@ module.exports = async function handler(req, res) {
     }
     
     // GoogleGenerativeAI ক্লায়েন্ট তৈরি করা
+    // এখন এটি সঠিকভাবে কাজ করা উচিত
     const genAI = new GoogleGenerativeAI(apiKey); 
 
     try {

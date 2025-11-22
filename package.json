@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Backend API for daily-muslim app using Gemini",
   "main": "api/askGemini.js",
+  "type": "module",  
   "scripts": {
     "start": "node api/askGemini.js"
   },
   "dependencies": {
-    "@google/genai": "*" 
+    "@google/genai": "*"
   }
 }

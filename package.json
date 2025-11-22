@@ -1,7 +1,7 @@
 {
-  "name": "daily-muslim-app",
+  "name": "daily-muslim-api",
   "version": "1.0.0",
-  "description": "Backend API for Islamic Shohayika",
+  "description": "Backend API for daily-muslim app using Gemini",
   "main": "api/askGemini.js",
   "scripts": {
     "start": "node api/askGemini.js"
@@ -10,8 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google/genai": "^0.1.0" 
-    // যদি আপনার API কোডে cors, dotenv ইত্যাদি দরকার হয়, তাহলে এখানে যোগ করবেন
-    // "cors": "^2.8.5"
+    "@google/genai": "^0.1.0"
+    
+    // আপনার যদি 'api/askGemini.js' কোডে অন্য কোনো প্যাকেজ (যেমন cors, dotenv)
+    // ব্যবহার করা হয়ে থাকে, তবে সেগুলোও এখানে অবশ্যই যোগ করতে হবে।
+    // উদাহরণ:
+    // "cors": "^2.8.5",
+    // "dotenv": "^16.4.5"
   }
 }

@@ -1,5 +1,5 @@
-// GoogleGenerativeAI SDK আমদানি করা: Vercel (ES Modules) এর জন্য import ব্যবহার করা হলো
-import { GoogleGenerativeAI } from '@google/genai';
+// GoogleGenerativeAI SDK আমদানি করা: CommonJS (CJS) এর জন্য require ব্যবহার করা হলো
+const { GoogleGenerativeAI } = require('@google/genai');
 
 // আপনার অ্যাপের সম্পূর্ণ ও চূড়ান্ত তথ্য ভান্ডার (APP_METADATA)
 const APP_METADATA = `এই অ্যাপ্লিকেশনটির আনুষ্ঠানিক নাম 'Daily Muslim', যা অ্যাপের ভেতরে 'ইসলামিক সহায়িকা' (Islamic Shohayika) নামে পরিচিত। এটি একটি ডেডিকেটেড ইসলামিক অ্যাপ।
@@ -36,77 +36,76 @@ ${APP_METADATA}
 ব্যবহারকারীর প্রশ্ন: REPLACE_PROMPT_HERE`;
 
 
-// Vercel Serverless Function-এর এন্ট্রি পয়েন্ট
-export default async function handler(req, res) {
-    
-    // ===========================================
-    // CORS হেডার যুক্ত করা (নেটওয়ার্ক এরর সমাধানের জন্য)
-    // ===========================================
-    res.setHeader('Access-Control-Allow-Origin', '*'); 
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+// Vercel Serverless Function-এর এন্ট্রি পয়েন্ট (CJS Export)
+module.exports = async function handler(req, res) {
+    
+    // ===========================================
+    // CORS হেডার যুক্ত করা (নেটওয়ার্ক এরর সমাধানের জন্য)
+    // ===========================================
+    res.setHeader('Access-Control-Allow-Origin', '*'); 
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // OPTIONS রিকোয়েস্ট হ্যান্ডেল করা
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-    
-    // নিশ্চিত করা যে এটি POST রিকোয়েস্ট
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
-    }
+    // OPTIONS রিকোয়েস্ট হ্যান্ডেল করা
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
+    
+    // নিশ্চিত করা যে এটি POST রিকোয়েস্ট
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method Not Allowed' });
+    }
 
-    // API Key টি Vercel Environment Variables থেকে নিরাপদে নেওয়া হচ্ছে
-    const apiKey = process.env.GEMINI_API_KEY; 
-    
-    // ===================================
-    // DEBUGGING: ফাংশন শুরু হয়েছে কিনা তা লগ করা
-    // ===================================
-    console.log("DEBUG: Function Started Successfully."); 
+    // API Key টি Vercel Environment Variables থেকে নিরাপদে নেওয়া হচ্ছে
+    const apiKey = process.env.GEMINI_API_KEY; 
+    
+    // ===================================
+    // DEBUGGING: ফাংশন শুরু হয়েছে কিনা তা লগ করা
+    // ===================================
+    console.log("DEBUG: Function Started Successfully."); 
 
-    // API Key না পেলে ত্রুটি প্রদান করা
-    if (!apiKey) {
-        console.error("DEBUG: Configuration Error: GEMINI_API_KEY is not set.");
-        return res.status(500).json({ error: 'API Key Missing. Check Vercel Environment Variables.' });
-    }
-    
-    // GoogleGenerativeAI ক্লায়েন্ট তৈরি করা
-    const genAI = new GoogleGenerativeAI(apiKey); 
+    // API Key না পেলে ত্রুটি প্রদান করা
+    if (!apiKey) {
+        console.error("DEBUG: Configuration Error: GEMINI_API_KEY is not set.");
+        return res.status(500).json({ error: 'API Key Missing. Check Vercel Environment Variables.' });
+    }
+    
+    // GoogleGenerativeAI ক্লায়েন্ট তৈরি করা
+    const genAI = new GoogleGenerativeAI(apiKey); 
 
-    try {
-        // Vercel এ রিকোয়েস্ট বডি req.body থেকে সরাসরি JSON হিসেবে পাওয়া যায়
-        const { prompt } = req.body; // ব্যবহারকারীর প্রশ্ন
+    try {
+        // Vercel এ রিকোয়েস্ট বডি req.body থেকে সরাসরি JSON হিসেবে পাওয়া যায়
+        const { prompt } = req.body; // ব্যবহারকারীর প্রশ্ন
 
-        if (!prompt) {
-            return res.status(400).json({ error: "Prompt is missing." });
-        }
-        
-        // পূর্ণ prompt তৈরি করা
-        const fullPrompt = fullPromptTemplate.replace("REPLACE_PROMPT_HERE", prompt); 
-        
-        // মডেল সেট আপ এবং কল করা
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        
-        // Gemini API কল
-        console.log("DEBUG: Attempting Gemini API Call...");
-        const result = await model.generateContent(fullPrompt); 
-        const responseText = result.text; // উত্তর বের করা
+        if (!prompt) {
+            return res.status(400).json({ error: "Prompt is missing." });
+        }
+        
+        // পূর্ণ prompt তৈরি করা
+        const fullPrompt = fullPromptTemplate.replace("REPLACE_PROMPT_HERE", prompt); 
+        
+        // মডেল সেট আপ এবং কল করা
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        
+        // Gemini API কল
+        console.log("DEBUG: Attempting Gemini API Call...");
+        const result = await model.generateContent(fullPrompt); 
+        const responseText = result.text; // উত্তর বের করা
 
-        // সফল উত্তর ক্লায়েন্টকে পাঠানো
-        res.status(200).json({ response: responseText });
-        
-    } catch (error) {
-        // ==================================================
-        // যেকোনো API বা পার্সিং ত্রুটি হ্যান্ডেল করা
-        // ==================================================
-        console.error("CRITICAL ERROR: Gemini API Call Failed! Full Error:", error.toString()); 
-        
-        // যদি Key ভুল হয়, তবে Google সাধারণত 4xx বা 5xx এরর দেয়।
-        // Vercel লগসে এরর দেখানোর জন্য এটি নিশ্চিত করা হলো।
-        res.status(500).json({ 
-            error: "এআই সার্ভার কল করতে সমস্যা হয়েছে। অনুগ্রহ করে Vercel লগ চেক করুন।",
-            details: error.message || error.toString() 
-        });
-    }
-}
+        // সফল উত্তর ক্লায়েন্টকে পাঠানো
+        res.status(200).json({ response: responseText });
+        
+    } catch (error) {
+        // ==================================================
+        // যেকোনো API বা পার্সিং ত্রুটি হ্যান্ডেল করা
+        // ==================================================
+        console.error("CRITICAL ERROR: Gemini API Call Failed! Full Error:", error.toString()); 
+        
+        // Vercel লগসে এরর দেখানোর জন্য এটি নিশ্চিত করা হলো।
+        res.status(500).json({ 
+            error: "এআই সার্ভার কল করতে সমস্যা হয়েছে। অনুগ্রহ করে Vercel লগ চেক করুন।",
+            details: error.message || error.toString() 
+        });
+    }
+};
